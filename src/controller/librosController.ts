@@ -3,12 +3,12 @@ import LibroModel from '../models/libroModel';
 import { Libro } from '../interfaces/libro';
 
 export const obtenerLibros = (req: Request, res: Response) => {
-  LibroModel
-    .find()
+
+  LibroModel.find()
     .then((libros) => {
       res.json(libros);
     });
-};
+}
 
 export const obtenerLibrPorId = (req: Request, res: Response) => {
   
@@ -41,7 +41,7 @@ export const crearLibro = (req: Request, res: Response) => {
         res.status(201).json(nuevoLibro);
       })
       .catch((error) => {
-        res.status(400).json({
+        res.status(500).json({
           errorCode: 'errorGenerico',
           mensaje: error,
         });
@@ -49,22 +49,21 @@ export const crearLibro = (req: Request, res: Response) => {
 }
 
 export const eliminarLibro = (req: Request, res: Response) => {
-  LibroModel
-    .findOne({ _id: req.params.id })
+  
+  LibroModel.findOneAndDelete({ _id: req.params.id })
     .then((libro) => {
-        if (!libro) {
-          return res.status(404).json({ 
-            errorCode: 'libroNoEncontrado',
-            mensaje: 'No se encontró el libro con el id proporcionado.' 
-          });
-        }
-        libro.deleteOne()
-          .then(() => { res.status(204) })
-          .catch((error) => {
-          res.status(400).json({
-            errorCode: 'errorGenerico',
-            mensaje: error,
-          });
+      if (!libro) {
+        return res.status(404).json({ 
+          errorCode: 'libroNoEncontrado',
+          mensaje: 'No se encontró el libro con el id proporcionado.' 
         });
+      }
+      res.status(204).end();
     })
+    .catch((error) => {
+      res.status(500).json({
+        errorCode: 'errorGenerico',
+        mensaje: error,
+      });
+    });
 }
