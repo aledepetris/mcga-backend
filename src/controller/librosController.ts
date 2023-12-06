@@ -12,7 +12,7 @@ export const obtenerLibros = (req: Request, res: Response) => {
 
 export const obtenerLibrPorId = (req: Request, res: Response) => {
   
-  LibroModel.findOne({ _id: req.params.id })
+  LibroModel.findById(req.params.id)
     .then((libro) => {
       if (!libro) {
         return res.status(404).json({ 
@@ -50,7 +50,7 @@ export const crearLibro = (req: Request, res: Response) => {
 
 export const eliminarLibro = (req: Request, res: Response) => {
   
-  LibroModel.findOneAndDelete({ _id: req.params.id })
+  LibroModel.findByIdAndDelete(req.params.id)
     .then((libro) => {
       if (!libro) {
         return res.status(404).json({ 
@@ -67,3 +67,5 @@ export const eliminarLibro = (req: Request, res: Response) => {
       });
     });
 }
+
+
