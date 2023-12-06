@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import { crearLibro, obtenerLibros, obtenerLibrPorId } from '../controller/librosController';
 const router = Router();
 

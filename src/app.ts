@@ -14,12 +14,12 @@ app.use(cors({ origin: '*' }));
 app.use(router);
 
 mongoose.connect(URL_DB).then(() => {
-  console.log("🟢 Base de datos conectada.");
+  console.log('🟢 Base de datos conectada.');
   app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
   });
 }).catch((err: any) => {
-  console.log("🔴 Hubo un error al intentar conectarse a la base de datos.");
+  console.log('🔴 Hubo un error al intentar conectarse a la base de datos.');
   console.log(err);
 });
 
