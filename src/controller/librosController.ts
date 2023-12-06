@@ -11,17 +11,17 @@ export const obtenerLibros = (req: Request, res: Response) => {
 };
 
 export const obtenerLibrPorId = (req: Request, res: Response) => {
-  LibroModel
-    .findOne({ _id: req.params.id })
+  
+  LibroModel.findOne({ _id: req.params.id })
     .then((libro) => {
       if (!libro) {
         return res.status(404).json({ 
           errorCode: 'libroNoEncontrado',
           mensaje: 'No se encontró el libro con el id proporcionado.' 
-      });
-    }
-    res.json(libro);
-  });
+        })
+      }
+      res.json(libro);
+    });
 }
 
 export const crearLibro = (req: Request, res: Response) => {
@@ -36,17 +36,35 @@ export const crearLibro = (req: Request, res: Response) => {
 
     const nuevoLibro = new LibroModel(libro);
 
-    nuevoLibro
-    .save()
-    .then(() => {
-      res.status(201).json(nuevoLibro);
-    })
-    .catch((error) => {
-      res.status(400).json({
-        errorCode: 'erroGenerico',
-        mensaje: error,
-      });
-    })
+    nuevoLibro.save()
+      .then(() => {
+        res.status(201).json(nuevoLibro);
+      })
+      .catch((error) => {
+        res.status(400).json({
+          errorCode: 'errorGenerico',
+          mensaje: error,
+        });
+      })
 }
 
-
+export const eliminarLibro = (req: Request, res: Response) => {
+  LibroModel
+    .findOne({ _id: req.params.id })
+    .then((libro) => {
+        if (!libro) {
+          return res.status(404).json({ 
+            errorCode: 'libroNoEncontrado',
+            mensaje: 'No se encontró el libro con el id proporcionado.' 
+          });
+        }
+        libro.deleteOne()
+          .then(() => { res.status(204) })
+          .catch((error) => {
+          res.status(400).json({
+            errorCode: 'errorGenerico',
+            mensaje: error,
+          });
+        });
+    })
+}
