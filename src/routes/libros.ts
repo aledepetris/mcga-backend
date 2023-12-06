@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { crearLibro } from '../controller/librosController';
+import { crearLibro, obtenerLibros } from '../controller/librosController';
 const router = Router();
 
-router.get('');
+router.get('', obtenerLibros);
 router.get('/:id');
 router.post('', crearLibro);
 router.put('/:id');

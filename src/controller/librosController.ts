@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import LibroModel from '../models/libroModel';
 import { Libro } from '../interfaces/libro';
 
+export const obtenerLibros = (req: Request, res: Response) => {
+  LibroModel.find().then((libros) => {
+    res.json(libros);
+  });
+};
+
 export const crearLibro = (req: Request, res: Response) => {
 
     const libro: Libro = req.body;
