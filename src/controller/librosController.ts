@@ -48,7 +48,7 @@ export const crearLibro = (req: Request, res: Response) => {
       })
 }
 
-export const eliminarLibro = (req: Request, res: Response) => {
+export const actualizarLibroPorId = (req: Request, res: Response) => {
   
   LibroModel.findByIdAndDelete(req.params.id)
     .then((libro) => {
@@ -68,4 +68,24 @@ export const eliminarLibro = (req: Request, res: Response) => {
     });
 }
 
+export const actualizarLibro = (req: Request, res: Response) => {
 
+  const libro: Libro = req.body;
+  if (!libro.titulo || !libro.autor || !libro.isbn || !libro.genero || !libro.editorial || !libro.numPaginas ) {
+      return res.status(400).json({ 
+          errorCode: 'camposRequeridos',
+          mensaje: 'Error al crear un nuevo libro, todos los campos son requeridos' 
+      });
+  }
+  
+  LibroModel.findByIdAndUpdate(req.params.id, libro)
+    .then(() => {
+      res.status(200).json(libro);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        errorCode: 'errorGenerico',
+        mensaje: error,
+      });
+    })
+};
