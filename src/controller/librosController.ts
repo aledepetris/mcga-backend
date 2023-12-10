@@ -48,7 +48,7 @@ export const crearLibro = (req: Request, res: Response) => {
       })
 }
 
-export const actualizarLibroPorId = (req: Request, res: Response) => {
+export const eliminarLibroPorId = (req: Request, res: Response) => {
   
   LibroModel.findByIdAndDelete(req.params.id)
     .then((libro) => {
@@ -68,7 +68,7 @@ export const actualizarLibroPorId = (req: Request, res: Response) => {
     });
 }
 
-export const actualizarLibro = (req: Request, res: Response) => {
+export const actualizarLibroPorId = (req: Request, res: Response) => {
 
   const libro: Libro = req.body;
   if (!libro.titulo || !libro.autor || !libro.isbn || !libro.genero || !libro.editorial || !libro.numPaginas ) {
